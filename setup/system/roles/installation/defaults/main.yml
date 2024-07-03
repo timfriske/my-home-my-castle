@@ -11,14 +11,14 @@ local_bin_dir: /usr/local/bin
 local_man_dir: /usr/local/share/man
 
 argo_workflows_program: argo
-argo_workflows_version: 3.5.6
-argo_workflows_checksum: sha256:6691b0aa1414b8b1cb8340f50eb7ab352517519f4f982ac682798f369a965c32
+argo_workflows_version: 3.4.4
+argo_workflows_checksum: sha256:b5d9b07d4749d95213ecdb0c866fb6e8748b9b58e099a1e43a5e78c89673029e
 argo_workflows_archive_file: argo-linux-amd64.gz
 argo_workflows_url: https://github.com/argoproj/argo-workflows/releases/download/v{{ argo_workflows_version }}/{{ argo_workflows_archive_file }}
 
 aws_cli_program: aws
-aws_cli_version: 2.15.43
-aws_cli_checksum: sha256:b54a05f4e92532ab78013798e180dfa659e8b486f610dc65b46e977af4946752
+aws_cli_version: 2.17.7
+aws_cli_checksum: sha256:4f360c66809fec0670f6dcf477ef078c330a42d794b29c2994ab8d0e98cc7e06
 aws_cli_archive_file: awscli-exe-linux-x86_64-{{ aws_cli_version }}.zip
 aws_cli_url: https://awscli.amazonaws.com/{{ aws_cli_archive_file }}
 aws_cli_base_dir: /usr/local/aws-cli/v2
