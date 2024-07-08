@@ -66,12 +66,12 @@ export DF_X_OPTIONS='--print-type'
 export DF_COMMON_X_OPTIONS='--exclude-type=devtmpfs --exclude-type=squashfs --exclude-type=tmpfs'
 export FREE_X_OPTIONS='--human'
 
-export DIFF_X_OPTIONS='--color=auto --unified --ignore-tab-expansion --ignore-space-change --ignore-trailing-space --ignore-blank-lines --ignore-all-space'
+export DIFF_X_OPTIONS='--color=auto --ignore-all-space --ignore-blank-lines --ignore-space-change --ignore-tab-expansion --ignore-trailing-space --unified'
 export GIT_X_SIGNOFF='--signoff'
-export GREP_X_OPTIONS='--binary-files=without-match --color=auto  --devices=skip --directories=recurse'
+export GREP_X_OPTIONS='--binary-files=without-match --color=auto --devices=skip --directories=recurse'
 export RIPGREP_X_OPTIONS='--smart-case'
 export INFO_X_OPTIONS='--vi-keys'
-export LS_X_OPTIONS='--classify --color=auto --time-style=long-iso --group-directories-first'
+export LS_X_OPTIONS='--classify --color=auto --group-directories-first --human-readable --time-style=long-iso'
 
 export MKDIR_X_OPTIONS='--parents --verbose'
 export RMDIR_X_OPTIONS='--verbose'
@@ -81,14 +81,14 @@ export LN_X_OPTIONS='--interactive --verbose'
 export RM_X_OPTIONS='--interactive --verbose'
 export RSYNC_X_OPTIONS='--human-readable --progress'
 
-export FZF_GIT_BRANCH_FZF_OPTS='--multi --exit-0'
-export FZF_PPDS_FZF_OPTS='--height=1% --layout=reverse --multi --bind=ctrl-a:select-all,ctrl-d:deselect-all'
-export FZF_GIT_TAG_FZF_OPTS='--multi --exit-0'
-export FZF_JOBS_FZF_OPTS='--multi --exit-0'
+export FZF_GIT_BRANCH_FZF_OPTS='--exit-0 --multi'
+export FZF_PPDS_FZF_OPTS='--bind=ctrl-a:select-all,ctrl-d:deselect-all --height=1% --layout=reverse --multi'
+export FZF_GIT_TAG_FZF_OPTS='--exit-0 --multi'
+export FZF_JOBS_FZF_OPTS='--exit-0 --multi'
 
 export PAGER=less
 export SYSTEMD_LESS="${LESS}"
-export LESS='--no-init --tabs=4 --LONG-PROMPT --ignore-case --jump-target=.5 --hilite-unread --RAW-CONTROL-CHARS --chop-long-lines --quit-if-one-screen'
+export LESS='--chop-long-lines --hilite-unread --ignore-case --jump-target=.5 --LONG-PROMPT --no-init --quit-if-one-screen --RAW-CONTROL-CHARS --tabs=4'
 
 export SED_X_OPTIONS='--regexp-extended'
 
@@ -102,7 +102,7 @@ export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S '
 export HISTCONTROL=erasedups:ignorespace
 export HISTIGNORE='+([[:alnum:]])*([[:space:]])'
 
-export PARALLEL_X_OPTIONS='--no-run-if-empty --keep-order'
+export PARALLEL_X_OPTIONS='--keep-order --no-run-if-empty'
 
 # Test if login shell has startup file with local overrides.
 if [[ -f ~/.bash_login.local && -r ~/.bash_login.local ]]; then
