@@ -11,8 +11,8 @@ local_bin_dir: /usr/local/bin
 local_man_dir: /usr/local/share/man
 
 argo_workflows_program: argo
-argo_workflows_version: 3.4.4
-argo_workflows_checksum: sha256:b5d9b07d4749d95213ecdb0c866fb6e8748b9b58e099a1e43a5e78c89673029e
+argo_workflows_version: 3.5.8
+argo_workflows_checksum: sha256:7ad8bd35728afde66de08b3031dab2e15c0e5e93796c6ee77f7e6dfcf0f174fe
 argo_workflows_archive_file: argo-linux-amd64.gz
 argo_workflows_url: https://github.com/argoproj/argo-workflows/releases/download/v{{ argo_workflows_version }}/{{ argo_workflows_archive_file }}
 
@@ -36,8 +36,8 @@ d2_archive_file: d2-v{{ d2_version }}-linux-amd64.tar.gz
 d2_url: https://github.com/terrastruct/d2/releases/download/v{{ d2_version }}/{{ d2_archive_file }}
 
 fzf_program: fzf
-fzf_version: 0.51.0
-fzf_checksum: sha256:14bf59646adf43ddbe3fd854d04a9de3c16afd4c9b493ff61d44e71c9670243d
+fzf_version: 0.53.0
+fzf_checksum: sha256:af2663c3309967dc191d21537e53c2e9f8a37f490a32456b9498a006f05e3796
 fzf_archive_file: fzf-{{ fzf_version }}-linux_amd64.tar.gz
 fzf_url: https://github.com/junegunn/fzf/releases/download/{{ fzf_version }}/{{ fzf_archive_file }}
 
@@ -47,6 +47,6 @@ jq_checksum: sha256:5942c9b0934e510ee61eb3e30273f1b3fe2590df93933a93d7c58b81d19c
 jq_url: https://github.com/jqlang/jq/releases/download/jq-{{ jq_version }}/jq-linux-amd64
 
 yq_program: yq
-yq_version: 4.43.1
-yq_checksum: sha256:cfbbb9ba72c9402ef4ab9d8f843439693dfb380927921740e51706d90869c7e1
+yq_version: 4.44.2
+yq_checksum: sha256:246b781828353a59fb04ffaada241f78a8f3f25c623047b40306def1f6806e71
 yq_url: https://github.com/mikefarah/yq/releases/download/v{{ yq_version }}/yq_linux_amd64
