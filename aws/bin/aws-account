@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# AWS Account command
+# ===================
+# Tim Friske <me@tifr.de>
+#
+# Prints the AWS account ID from the Security Token Service (STS) caller
+# identity, i.e. the account the IAM user or role operates in.
+#
+# Deps:: aws, bash, env
+
+# Ensure fail-fast script execution.
+shopt -os nounset noclobber pipefail errexit errtrace
+
+aws sts get-caller-identity --query Account --output text "${@}"
