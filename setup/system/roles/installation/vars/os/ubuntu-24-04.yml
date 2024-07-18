@@ -31,6 +31,7 @@ packages:
   gimp:
   git:
   gnupg:
+  golang-docker-credential-helpers:
   htop:
   inkscape:
   inxi:

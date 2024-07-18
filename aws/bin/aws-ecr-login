@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# AWS ECR Login command
+# =====================
+# Tim Friske <me@tifr.de>
+#
+# Logs Docker into the AWS ECR of the current or given AWS profile.
+#
+# Deps:: aws, aws-ecr-uri, bash, env
+
+# Ensure fail-fast script execution.
+shopt -os nounset noclobber pipefail errexit errtrace
+
+AWS_ECR_URI="$(aws-ecr-uri "${@}")"
+
+aws ecr get-login-password "${@}" | docker login --username AWS --password-stdin "${AWS_ECR_URI}"

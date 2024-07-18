@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# AWS ECR URI command
+# ===================
+# Tim Friske <me@tifr.de>
+#
+# Prints the AWS ECR URI of the current or given profile.
+#
+# Deps:: aws, aws-account, bash, env
+
+# Ensure fail-fast script execution.
+shopt -os nounset noclobber pipefail errexit errtrace
+
+AWS_ACCOUNT="$(aws-account "${@}")"
+AWS_REGION="$(aws configure get region "${@}")"
+
+printf "%s.dkr.ecr.%s.amazonaws.com\n" "${AWS_ACCOUNT}" "${AWS_REGION}"
