@@ -62,8 +62,9 @@ export CHGRP_X_OPTIONS='--changes --preserve-root'
 export CHMOD_X_OPTIONS='--changes --preserve-root'
 export CHOWN_X_OPTIONS='--changes --preserve-root'
 
-export DF_X_OPTIONS='--print-type'
+export DF_X_OPTIONS='--human-readable --print-type --total'
 export DF_COMMON_X_OPTIONS='--exclude-type=devtmpfs --exclude-type=squashfs --exclude-type=tmpfs'
+export DU_X_OPTIONS='--human-readable --total'
 export FREE_X_OPTIONS='--human'
 
 export DIFF_X_OPTIONS='--color=auto --ignore-all-space --ignore-blank-lines --ignore-space-change --ignore-tab-expansion --ignore-trailing-space --unified'
