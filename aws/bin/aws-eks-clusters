@@ -8,25 +8,22 @@
 # clusters by the given regular expressions (regex). When giving multiple
 # regexes at least one of them must match (any; logical OR).
 #
-# Deps:: aws, bash, env, jq
+# Deps:: aws, bash, env, jq, yq
 
 # Ensure fail-fast script execution.
 shopt -os nounset noclobber pipefail errexit errtrace
-
-# Input parameters and validation:
-names=("${@}") # optional
 
 function cluster_names {
   aws eks list-clusters --output json | jq '.clusters|sort'
 }
 
 function select_by_name {
-  local names=("${@}");: "${names:?required}"
+  local names=("${@:?required}")
   jq 'map(select(. as $name|$ARGS.positional|any(. as $arg|$name|test($arg;"i"))))' --args -- "${names[@]}"
 }
 
-if (( "${#names[@]}" == 0 )); then
+if (( "${#@}" == 0 )); then
   cluster_names
 else
-  cluster_names | select_by_name "${names[@]}"
-fi
+  cluster_names | select_by_name "${@}"
+fi | if [[ -t 1 ]]; then yq --prettyPrint; else jq; fi
