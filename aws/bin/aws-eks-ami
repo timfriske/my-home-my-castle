@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# AWS EKS AMI command
+# ===================
+# Tim Friske <me@tifr.de>
+#
+# Prints the IDs and names of the recommended AWS-EKS-optimized Amazon machine
+# images (AMIs) for the given Kubernetes version.
+#
+# Deps:: aws, bash, env, jq, yq
+
+# Ensure fail-fast script execution.
+shopt -os nounset noclobber pipefail errexit errtrace
+
+K8S_VERSION="${1:-${K8S_VERSION:?required}}"
+
+aws ssm get-parameters-by-path --path "/aws/service/eks/optimized-ami/${K8S_VERSION}" --recursive \
+| jq '.Parameters|map(select(.Name|endswith("recommended"))|.Value|fromjson|{image_id,image_name})' \
+| if [[ -t 1 ]]; then yq --prettyPrint; else jq; fi
