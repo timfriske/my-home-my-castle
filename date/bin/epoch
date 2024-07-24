@@ -13,7 +13,7 @@
 # Deps:: bash, date, env
 
 # Ensure fail-fast execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 if [[ -t 1 ]]; then
   date '+epoch: %ss'

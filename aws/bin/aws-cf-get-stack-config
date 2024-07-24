@@ -11,7 +11,7 @@
 # Deps:: aws, bash, env, jq
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 # Input parameters and validation:
 stack_name="${1:-"${stack_name:?required}"}"

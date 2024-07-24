@@ -7,6 +7,6 @@
 # Deps:: bash, env, git-diff, git-edit, xargs
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 git diff --name-only --diff-filter=U -z | xargs -o -n 10 -0 git edit

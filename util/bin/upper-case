@@ -10,7 +10,7 @@
 # Deps:: awk, bash, env
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 # `tr '[:lower:]' '[:upper:]'` only works for ASCII [a-z].
 function uppercase { awk '{print toupper($0)}'; }

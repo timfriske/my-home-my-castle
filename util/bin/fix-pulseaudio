@@ -10,7 +10,7 @@
 # Deps:: bash, env, rm, systemctl
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 systemctl --user stop pulseaudio.service
 rm --force --recursive ~/.config/pulse

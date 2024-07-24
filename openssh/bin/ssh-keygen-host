@@ -17,7 +17,7 @@
 # this host on-the-fly, i.e. without logging in as that user and out again.
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 echo Choose folder common to all SSH key pairs for the host.
 key_folder=/etc/ssh

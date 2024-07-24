@@ -16,7 +16,7 @@
 # Deps:: bash, env, file
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 prog="${0##*/}"
 

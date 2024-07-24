@@ -19,7 +19,7 @@
 # Deps:: bash, cryptsetup, env
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function ensure_block_special_file {
     local file="${1:-${file:?required}}"

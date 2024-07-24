@@ -9,7 +9,7 @@
 # Deps:: aws, aws-ecr-uri, bash, env
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 AWS_ECR_URI="$(aws-ecr-uri "${@}")"
 

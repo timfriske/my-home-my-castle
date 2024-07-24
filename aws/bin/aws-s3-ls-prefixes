@@ -9,7 +9,7 @@
 # Deps:: aws, bash, env, sed
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 aws s3 ls -- "${1:?URI required}" \
   | sed --regexp-extended --expression='s|^\s+PRE\s||'

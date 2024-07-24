@@ -13,7 +13,7 @@
 # Deps:: argo-watch-list-cmd, bash, env
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 interval="${interval:-${1:-5}}"
 status="${status:-${2:-Running,Failed,Error}}"

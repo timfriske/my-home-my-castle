@@ -9,7 +9,7 @@
 # Deps:: awk, bash, env, fzf, kubectl, xargs
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function contexts { printf '%s\n' "${@}" | awk --source='{print $1}'; }
 function map { xargs --no-run-if-empty --max-args=1 -- "${@}"; }

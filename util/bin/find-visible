@@ -18,7 +18,7 @@
 # Deps:: bash, env, find
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 if [[ -d "${1:-}" ]]; then
   find "${1}" -type d -path '*/\.*' -prune -o -not -name '.*' "${@:2}"

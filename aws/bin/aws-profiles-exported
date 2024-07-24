@@ -14,6 +14,6 @@
 # Deps:: aws, bash, env, grep, sort
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 aws-profiles "${@}" | xargs --no-run-if-empty -- printf 'export AWS_PROFILE="%s"\n'

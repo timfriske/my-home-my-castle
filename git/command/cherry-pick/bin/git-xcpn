@@ -7,6 +7,6 @@
 # Deps:: bash, env, git-cherry-pick
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 git cherry-pick --no-commit ${GIT_X_SIGNOFF:+"${GIT_X_SIGNOFF}"} "${@}"

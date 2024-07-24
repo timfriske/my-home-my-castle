@@ -10,7 +10,7 @@
 # Deps:: bash, env, kubectl
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 kubectl get pod --selector app==workflow-controller
 kubectl delete pod --selector app==workflow-controller --wait

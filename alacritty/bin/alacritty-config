@@ -12,7 +12,7 @@
 # Deps:: xargs
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 config_prefix="${XDG_CONFIG_HOME:-${HOME}/.config}/alacritty"
 config_dir="${config_prefix}"

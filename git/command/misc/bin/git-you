@@ -12,7 +12,7 @@
 # Deps:: bash, env, git-config
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function git_config_reset {
   local opt_val

@@ -10,7 +10,7 @@
 # Deps:: bash, date, env
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function timestamp { date +%s; }
 function timestamp_to_date { date --date="@${1}"; }

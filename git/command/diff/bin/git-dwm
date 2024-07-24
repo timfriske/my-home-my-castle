@@ -7,6 +7,6 @@
 # Deps:: bash, env, git-diff
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 (cd "${GIT_PREFIX:-.}" && git diff --word-diff=color "${1:-HEAD}^-" "${@:2}")

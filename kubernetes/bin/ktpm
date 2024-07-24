@@ -7,7 +7,7 @@
 # Deps:: bash, env, kubectl, watch
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 if [[ -t 1 ]]; then
   watch --differences kubectl top pod --sort-by=memory "${@}"

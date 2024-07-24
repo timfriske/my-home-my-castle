@@ -11,6 +11,6 @@
 # Deps:: bash, env, xargs
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 xargs --max-args=1 --no-run-if-empty "${@}"

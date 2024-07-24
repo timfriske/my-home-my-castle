@@ -9,7 +9,7 @@
 # Deps:: aws, bash, cat, env, jq, numfmt
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function summarize_objects {
   local path="${1#s3://}"

@@ -12,7 +12,7 @@
 # Deps:: aws, bash, env, jq
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 # Input parameters and validation:
 addon="${1:-"${addon:?required}"}"

@@ -10,7 +10,7 @@
 # Deps:: awk, bash, env, fzf, kubectl, parallel, xargs
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function cjs { printf '%s\n' "${@}" | awk --source='{print $1}'; } 
 function par { parallel --no-run-if-empty --keep-order -- "${@}"; }

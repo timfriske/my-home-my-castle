@@ -10,7 +10,7 @@
 # Deps:: awk, bash, env, fzf, kubectl, parallel, sed
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function pick {
   local bindings=(

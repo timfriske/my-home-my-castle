@@ -7,7 +7,7 @@
 # Deps:: bash, env, git-diff, git-edit, parallel
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 git diff --name-only --diff-filter=U -z \
   | parallel --tty -Xj1 --no-run-if-empty --max-args=10 --null git edit

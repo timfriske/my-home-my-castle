@@ -9,6 +9,6 @@
 # Deps:: bash, env, git-log
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 git log --max-count=1 --oneline --stat "${@}"

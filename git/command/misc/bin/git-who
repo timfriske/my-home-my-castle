@@ -10,7 +10,7 @@
 # Deps:: awk, bash, column, env, git-config, git-semver
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function awk_tab {
   awk -v FS='\t' -v OFS='\t' "${@}"

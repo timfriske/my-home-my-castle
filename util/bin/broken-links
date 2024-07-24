@@ -11,6 +11,6 @@
 # Deps:: bash, env, find
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 find "${@}" -xtype l

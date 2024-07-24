@@ -9,6 +9,6 @@
 # Deps:: bash, cat, env
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 cat --show-nonprinting --show-tabs --show-ends "${@}"

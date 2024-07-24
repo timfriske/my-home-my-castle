@@ -11,7 +11,7 @@
 # Deps:: bash, env, sed
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 #shellcheck disable=SC1003
 sed --expression='s/^\r//;s/\r$//;s/\r/\n/g;$a\' "${@:+--in-place "${@}"}"

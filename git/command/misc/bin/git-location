@@ -10,7 +10,7 @@
 # Deps:: bash, env, git
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function get_branch {
   git symbolic-ref --quiet --short "${ref:-HEAD}"

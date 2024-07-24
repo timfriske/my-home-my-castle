@@ -10,7 +10,7 @@
 # Deps:: awk, bash, env, git-ls-remote, uniq
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 # List remote tags. Drop commit IDs in first column. Keep tags in second column.
 # Strip prefix `refs/tags/` and suffix `^{}` from tags. Keep light-weight tags,

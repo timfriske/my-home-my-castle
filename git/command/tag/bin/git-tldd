@@ -10,6 +10,6 @@
 # Deps:: bash, column, env, git-tld
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 git-tld --sort='-creatordate'

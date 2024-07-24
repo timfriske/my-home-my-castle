@@ -11,7 +11,7 @@
 # Deps:: bash, env, git-version, jq, yq
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function parse_git_version {
   jq --raw-input 'split(" ").[2]|split(".")|{major:.[0],minor:.[1],patch:.[2]}'

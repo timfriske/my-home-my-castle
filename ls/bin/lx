@@ -10,7 +10,7 @@
 # Deps:: bash, env, ls
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 read -r -a ls_x_options <<< "${LS_X_OPTIONS:-}"
 ls "${ls_x_options[@]}" --sort=extension "${@}"

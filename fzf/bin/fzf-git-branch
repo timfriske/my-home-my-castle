@@ -35,7 +35,7 @@
 #   * man:git[1]
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function fzf_git_branch {
   local -- branch_options=() branch_opts_cust

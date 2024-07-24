@@ -7,6 +7,6 @@
 # Deps:: bash, env, git-status
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 git status --short --branch --untracked-files=all "${@}"

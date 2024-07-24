@@ -7,6 +7,6 @@
 # Deps:: bash, env, git-branch
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 git branch --list --verbose "${@}"

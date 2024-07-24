@@ -9,7 +9,7 @@
 # Deps:: aws, bash, env
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function create_emtpy_object {
   local object_uri="${1:?AWS S3 object URI required}"

@@ -9,7 +9,7 @@
 # Deps:: bash, env, git-log
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function main {
   local pattern="${1:-}" commit="${2:-HEAD}" args=("${@:3}")

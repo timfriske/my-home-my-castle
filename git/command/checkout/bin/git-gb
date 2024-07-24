@@ -7,6 +7,6 @@
 # Deps:: bash, env, git-checkout
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 git checkout -b "${1}" "${2:-HEAD}"

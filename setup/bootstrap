@@ -33,7 +33,7 @@
 # Deps:: ansible, apt-get, bash, env, git, zypper
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 REPO_NAME="dotfiles"
 REPO_USER_ID="timfriske"

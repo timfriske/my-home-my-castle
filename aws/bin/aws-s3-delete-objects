@@ -13,7 +13,7 @@
 # Deps:: sort
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 # Standard input stream of script must be connected to terminal in order to
 # prompt the user.

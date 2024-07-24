@@ -11,7 +11,7 @@
 # Deps:: aws-ec2-lifecycle, bash, env
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 # Input parameters and validation:
 cluster="${1:-"${cluster:?required}"}"

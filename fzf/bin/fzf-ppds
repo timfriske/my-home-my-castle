@@ -10,7 +10,7 @@
 # Deps:: bash, cut, env, fzf, nl, ppds
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function main {
   local env_opts=() fzf_default_opts fzf_ppds_fzf_opts

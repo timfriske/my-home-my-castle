@@ -10,7 +10,7 @@
 # Deps:: env, pbpaste, sh, xclip, xsel
 
 # Ensure fail-fast execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 if (( "${#}" > 0 )); then
   echo >&2 "usage: cbp [> FILE | > >(PROCESS)]"

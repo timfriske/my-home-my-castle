@@ -16,7 +16,7 @@
 # Deps:: bash, env, sed, sort, tmux
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 # 1. Capture entire pane and print it.
 # 2. Split strings around whitespace and print one string per line.

@@ -14,7 +14,7 @@
 # Deps:: argo, bash, env, tput
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 header_lines="${header_lines:-${1:-0}}"
 status="${status:-${2:-}}"

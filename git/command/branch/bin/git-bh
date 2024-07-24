@@ -9,6 +9,6 @@
 # Deps:: bash, env, git-remote
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 git remote set-head "${@}"

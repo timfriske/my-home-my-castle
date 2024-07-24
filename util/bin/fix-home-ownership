@@ -21,7 +21,7 @@
 # Deps:: bash, chown, env, find, id
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function get_user_id { id --user -- "${1}" 2> /dev/null; }
 

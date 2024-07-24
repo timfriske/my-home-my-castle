@@ -5,7 +5,7 @@
 # Tim Friske <me@tifr.de>
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 declare -r site_dir="${0%/*}"
 

@@ -7,6 +7,6 @@
 # Deps:: bash, env, git-commit
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 git commit --fixup="${1:-HEAD~}" --no-edit ${GIT_X_SIGNOFF:+"${GIT_X_SIGNOFF}"} "${@:2}"

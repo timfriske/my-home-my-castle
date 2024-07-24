@@ -10,7 +10,7 @@
 # Deps:: bash, env, rsync
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 read -r -a rsync_x_options <<< "${RSYNC_X_OPTIONS:-}"
 rsync "${rsync_x_options[@]}" --archive --hard-links --acls --xattrs "${@}"

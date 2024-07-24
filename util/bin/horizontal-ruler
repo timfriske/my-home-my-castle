@@ -12,7 +12,7 @@
 # Deps:: bash, env, sed, tput
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function main {
   local sign="${1:-${sign:-=}}"

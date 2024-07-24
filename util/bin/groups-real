@@ -12,7 +12,7 @@
 # Deps:: awk, bash, env, getent, id
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 function user_groups {
   if getent passwd -- "${1}" &> /dev/null; then

@@ -10,7 +10,7 @@
 # Deps:: bash, du, env, find, sort, tr
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 read -r -a du_x_options <<< "${DU_X_OPTIONS:-}"
 find "${@}" -maxdepth 1 -xtype d -print0 \

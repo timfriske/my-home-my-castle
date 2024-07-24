@@ -18,7 +18,7 @@
 # Deps:: bash, env, jq, kubectl
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 # Read multi-line jq script into variable for legibility.
 read -r -d '' JQ_GET_LABELS <<'JQ_GET_LABELS' || true

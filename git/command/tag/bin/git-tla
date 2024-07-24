@@ -9,7 +9,7 @@
 # Deps:: awk, bash, env, git-show-ref
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 # List tags. Drop commit IDs in first column. Keep tags in second column. Keep
 # annotated tags, i.e. their dereferenced form ending in `^{}`. Strip prefix

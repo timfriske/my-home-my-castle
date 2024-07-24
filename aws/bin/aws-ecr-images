@@ -10,7 +10,7 @@
 # Deps:: aws, bash, env, jq
 
 # Ensure fail-fast script execution.
-shopt -os nounset noclobber pipefail errexit errtrace
+shopt -os nounset pipefail errexit errtrace
 
 # Input parameters and validation:
 AWS_ECR_REPO="${1:-${AWS_ECR_REPO:?required}}"
