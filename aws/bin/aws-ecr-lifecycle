@@ -13,12 +13,13 @@
 shopt -os nounset pipefail errexit errtrace
 
 # Input parameters and validation:
-policy_file="${1:-"${policy_file:?required}"}"
-policy_file="file://${policy_file#file://}"
-repositories=("${@:2}");: "${repositories?required}"
+POLICY_FILE="${1:-${POLICY_FILE:?required}}"
+POLICY_FILE="file://${POLICY_FILE#file://}"
+REPOSITORIES=("${@:2}");: "${REPOSITORIES?required}"
 
 function apply_policy {
-  local repository="${1:?repository}" policy_file="${2:?policy_file}" 
+  local repository="${1:?repository}"
+  local policy_file="${2:?policy_file}" 
   aws ecr put-lifecycle-policy \
     --repository-name "${repository}" \
     --lifecycle-policy-text "${policy_file}" \
@@ -26,4 +27,4 @@ function apply_policy {
 }; export -f apply_policy
 
 parallel --no-run-if-empty --keep-order -- \
-  apply_policy {} "${policy_file}" ::: "${repositories[@]}"
+apply_policy {} "${POLICY_FILE}" ::: "${REPOSITORIES[@]}"

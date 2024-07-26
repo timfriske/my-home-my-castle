@@ -7,18 +7,15 @@
 # Lists the names of the configured AWS profiles, alphanumerically sorted.
 # Optionally filters the list by one or more given extended regular expressions.
 #
-# Deps:: aws, bash, env, grep, sort
+# Deps:: aws, bash, cat, env, grep, sort
 
 # Ensure fail-fast script execution.
 shopt -os nounset pipefail errexit errtrace
 
-function profiles {
-    aws configure list-profiles
-}
-
-# Run different commands based on number of arguments.
-case "$(("${#}"))" in
-  0) profiles | sort;;
-  1) profiles | grep --extended-regexp --regexp="${1}" | sort;;
-  *) profiles | grep --extended-regexp --file=<(printf '%s\n' "${@}") | sort;;
-esac
+aws configure list-profiles \
+| case "$(("${#}"))" in
+    0) cat;;
+    1) grep --extended-regexp --regexp="${1}";;
+    *) grep --extended-regexp --file=<(printf '%s\n' "${@}");;
+  esac \
+| sort

@@ -13,5 +13,6 @@ shopt -os nounset pipefail errexit errtrace
 
 # Login might not work if AWS_PROFILE is set.
 unset AWS_PROFILE
+
 aws sso logout
 aws sso login

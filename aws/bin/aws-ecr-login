@@ -11,6 +11,7 @@
 # Ensure fail-fast script execution.
 shopt -os nounset pipefail errexit errtrace
 
+# Input parameters and validation:
 AWS_ECR_URI="$(aws-ecr-uri "${@}")"
 
 aws ecr get-login-password "${@}" | docker login --username AWS --password-stdin "${AWS_ECR_URI}"

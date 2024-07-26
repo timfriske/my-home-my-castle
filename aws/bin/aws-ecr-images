@@ -19,11 +19,21 @@ AWS_ECR_REPO_NAME="${AWS_ECR_REPO#*/}"
 function get_repo_uri {
   local repo_name="${1:?repo_name}"
   aws ecr describe-repositories --repository-names "${repo_name}" \
-    | jq --raw-output '.repositories[].repositoryUri'
+  | jq --raw-output '.repositories[].repositoryUri'
 }
 
 AWS_ECR_REPO_URI="$(get_repo_uri "${AWS_ECR_REPO_NAME}")"
 
+# Read multi-line jq script into variable for legibility.
+read -d '' -r AWS_ECR_IMAGES_QUERY <<'AWS_ECR_IMAGES_QUERY' || true
+  .imageIds[]
+  | if .imageTag then
+      ":" + .imageTag
+    else
+      "@" + .imageDigest
+    end
+  | $repo+.
+AWS_ECR_IMAGES_QUERY
+
 aws ecr list-images --repository-name "${AWS_ECR_REPO_NAME}" \
-  | jq --arg repo "${AWS_ECR_REPO_URI}" --raw-output \
-      '.imageIds[]|if .imageTag then ":"+.imageTag else "@"+.imageDigest end|$repo+.'
+| jq --arg repo "${AWS_ECR_REPO_URI}" --raw-output "${AWS_ECR_IMAGES_QUERY}"

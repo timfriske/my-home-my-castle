@@ -11,6 +11,7 @@
 # Ensure fail-fast script execution.
 shopt -os nounset pipefail errexit errtrace
 
+# Input parameters and validation:
 AWS_ACCOUNT="$(aws-account "${@}")"
 AWS_REGION="$(aws configure get region "${@}")"
 

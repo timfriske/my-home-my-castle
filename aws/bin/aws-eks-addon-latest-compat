@@ -15,9 +15,19 @@
 shopt -os nounset pipefail errexit errtrace
 
 # Input parameters and validation:
-addon="${1:-"${addon:?required}"}"
-kubernetes_version="${2:-"${kubernetes_version:?required}"}"
+AWS_EKS_ADDON="${1:-"${AWS_EKS_ADDON:?required}"}"
+K8S_VERSION="${2:-"${K8S_VERSION:?required}"}"
 
-aws eks describe-addon-versions --addon-name "${addon}" \
-  | jq --raw-output --arg cv "${kubernetes_version}" \
-    '.addons[0].addonVersions[]|select(.compatibilities[]|.clusterVersion==$cv and .defaultVersion==true).addonVersion'
+# Read multi-line jq script into variable for legibility.
+read -d '' -r AWS_EKS_ADDONS_QUERY <<'AWS_EKS_ADDONS_QUERY' || true
+  .addons[0].addonVersions[]
+  | select(
+      .compatibilities[]
+      | .clusterVersion==$cv 
+          and .defaultVersion==true
+    )
+    .addonVersion
+AWS_EKS_ADDONS_QUERY
+
+aws eks describe-addon-versions --addon-name "${AWS_EKS_ADDON}" \
+  | jq --raw-output --arg cv "${K8S_VERSION}" "${AWS_EKS_ADDONS_QUERY}"

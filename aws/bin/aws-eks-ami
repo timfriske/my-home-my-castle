@@ -12,6 +12,7 @@
 # Ensure fail-fast script execution.
 shopt -os nounset pipefail errexit errtrace
 
+# Input parameters and validation:
 K8S_VERSION="${1:-${K8S_VERSION:?required}}"
 
 aws ssm get-parameters-by-path --path "/aws/service/eks/optimized-ami/${K8S_VERSION}" --recursive \

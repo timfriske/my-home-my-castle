@@ -27,6 +27,21 @@ if [[ "${#AWS_ECR_REPO_NAME_REGEXES[@]}" -eq 1 ]]; then
   exit
 fi
 
+# Read multi-line jq script into variable for legibility.
+read -d '' -r AWS_ECR_SELECT_REPOS_QUERY <<'AWS_ECR_SELECT_REPOS_QUERY' || true
+  .repositories[]
+  | select(
+      .repositoryName as $name
+      | $ARGS.positional
+      | any(
+          . as $regex
+          | $name
+          | test($regex)
+        )
+    )
+    .repositoryUri
+AWS_ECR_SELECT_REPOS_QUERY
+
 aws ecr describe-repositories \
-  | jq '.repositories[]|select(.repositoryName as $name|$ARGS.positional|any(. as $regex|$name|test($regex))).repositoryUri' \
-      --raw-output --args -- "${AWS_ECR_REPO_NAME_REGEXES[@]}"
+| jq "${AWS_ECR_SELECT_REPOS_QUERY}" \
+    --raw-output --args -- "${AWS_ECR_REPO_NAME_REGEXES[@]}"

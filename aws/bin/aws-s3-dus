@@ -19,11 +19,11 @@ function summarize_objects {
   aws s3api list-objects-v2 \
     --output json \
     --query \
-"{\
-\"total_number\":length(Contents[]),\
-\"total_size\":sum(Contents[].Size),\
-\"average_size\":avg(Contents[].Size)\
-}" \
+      "{\
+      \"total_number\":length(Contents[]),\
+      \"total_size\":sum(Contents[].Size),\
+      \"average_size\":avg(Contents[].Size)\
+      }" \
     --bucket "${bucket}" \
     ${prefix:+--prefix "${prefix}"} \
   | jq --raw-output \

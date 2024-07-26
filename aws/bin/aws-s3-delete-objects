@@ -22,19 +22,15 @@ if [[ ! -t 0 ]]; then
   exit 1
 fi
 
-bucket="${1:?'bucket required'}"
-# Plain-text listing with each S3 key on a separate line. Blank and duplicate
-# lines are ignored.
-#
-# Example listing:
-#   * top-level-s3-object.csv
-#   * parent/child_s3-object.txt
-s3_keys_text_file="${2:?'S3 keys text file required'}"
+# Input parameters and validation:
+# AWS S3 bucket without leading schema (`s3://`).
+AWS_S3_BUCKET="${1:-${AWS_S3_BUCKET:?required}}"
+# Text file listing each S3 object key on separate line.
+AWS_S3_OBJECT_KEY_TEXT_FILE="${2:-${AWS_S3_OBJECT_KEY_TEXT_FILE:?required}}"
 
-# Abort if file with S3 keys is not in plain-text format, i.e. contains binary
-# data.
-if ! grep --binary-files=without-match --regexp='.' --quiet -- "${s3_keys_text_file}"; then
-  printf >&2 'file with S3 keys must be plain-text: %s\n' "${s3_keys_text_file}"
+# Abort if AWS S3 object key listing file is not text file.
+if ! grep --binary-files=without-match --regexp=. --quiet -- "${AWS_S3_OBJECT_KEY_TEXT_FILE}"; then
+  printf >&2 'file with S3 keys must be plain-text: %s\n' "${AWS_S3_OBJECT_KEY_TEXT_FILE}"
   exit 1
 fi
 
@@ -42,29 +38,29 @@ fi
 # suffix as its name. It is used to store intermediate results such as the json
 # files which are generated to list up to 1,000 S3 keys of objects to delete.
 # Also GNU parallel stores its joblog file in this directory.
-temp_dir="$(mktemp --directory --tmpdir="${PWD}" -- "${bucket}.XXXXXXXXXX")"
-temp_dir="${temp_dir#"${PWD}/"}"
-printf 'Temporary directory: %s\n' "${temp_dir}"
+TEMP_DIR="$(mktemp --directory --tmpdir="${PWD}" -- "${AWS_S3_BUCKET}.XXXXXXXXXX")"
+TEMP_DIR="${TEMP_DIR#"${PWD}/"}"
+printf 'Temporary directory: %s\n' "${TEMP_DIR}"
 
 # Delete blank and duplicate lines. S3 objects can be deleted only once.
-awk 'NF&&!a[$0]++' "${s3_keys_text_file}" > "${temp_dir}/unique_s3_keys.txt"
+awk --source='NF&&!a[$0]++' -- "${AWS_S3_OBJECT_KEY_TEXT_FILE}" > "${TEMP_DIR}/unique_s3_keys.txt"
 
 # From the given text file with S3 keys of objects to delete generate json files
 # with up to 1,000 of these S3 keys. Produce as many json files as needed in
 # order to not exceed the maximum number of objects which the `aws s3api
 # delete-objects` command can handle at once, i.e. per HTTP request.
-parallel --max-lines 1000 --max-args 1 --keep-order --pipe -- < "${temp_dir}/unique_s3_keys.txt" \
-    sh -c "cat | jq --raw-input '{Key:.}' | jq --slurp '{Objects:.,Quiet:true}' > '${temp_dir}/{#}.json'"
+parallel --max-lines 1000 --max-args 1 --keep-order --pipe -- < "${TEMP_DIR}/unique_s3_keys.txt" \
+    sh -c "cat | jq --raw-input '{Key:.}' | jq --slurp '{Objects:.,Quiet:true}' > '${TEMP_DIR}/{#}.json'"
 
 echo ==========================================================================
 echo WARNING: CAREFULLY REVIEW THE S3 OBJECTS BEFORE THEY WILL BE DELETED
 echo WARNING: AFTER REVIEW YOU ARE ASKED AGAIN WHETHER YOU WANT TO CONTINUE
 echo ==========================================================================
-printf 'Bucket: %s\n' "${bucket}"
+printf 'Bucket: %s\n' "${AWS_S3_BUCKET}"
 read -n 1 -s -r -p 'Press CTRL-C to abort or any other key to continue...'
 echo
 
-find "${temp_dir}" -maxdepth 1 -type f -name '*.json' \
+find "${TEMP_DIR}" -maxdepth 1 -type f -name '*.json' \
   | sort --sort=numeric --key=1.3,1 \
   | xargs --no-run-if-empty -- jq --raw-output '.Objects[].Key' -- \
   | less
@@ -73,18 +69,18 @@ echo ==========================================================================
 echo WARNING: YOU ARE ABOUT TO DELETE THE S3 OBJECTS YOU JUST REVIEWED
 echo WARNING: ARE YOU ABSOLUTELY SURE TO IRREVERSIBLY DELETE THE S3 OBJECTS
 echo ==========================================================================
-printf 'Bucket: %s\n' "${bucket}"
-printf 'Temporary directory: %s\n' "${temp_dir}"
+printf 'Bucket: %s\n' "${AWS_S3_BUCKET}"
+printf 'Temporary directory: %s\n' "${TEMP_DIR}"
 read -n 1 -s -r -p 'Press CTRL-C to abort or any other key to continue...'
 echo
 
 # For every previously produced json file run as many processes of the `aws
 # s3api delete-objects` command in parallel as there are threads in order to
 # maximize the number of S3 objects which are deleted per time unit.
-find "${temp_dir}" -maxdepth 1 -type f -name '*.json' \
+find "${TEMP_DIR}" -maxdepth 1 -type f -name '*.json' \
   | sort --sort=numeric --key=1.3,1 \
-  | parallel --max-args 1 --keep-order --joblog "${temp_dir}/joblog" --verbose -- \
-    aws s3api delete-objects --bucket "${bucket}" --delete 'file://{}'
+  | parallel --max-args 1 --keep-order --joblog "${TEMP_DIR}/joblog" --verbose -- \
+    aws s3api delete-objects --bucket "${AWS_S3_BUCKET}" --delete 'file://{}'
 
 # Archive deletion protocol for auditing purposes in the future.
-tar --create --auto-compress --verbose --file="${temp_dir}.tar.gz" -- "${temp_dir}"
+tar --create --use-compress-program='zstd --threads=0' --verbose --file="${TEMP_DIR}.tar.gz" --sort=name -- "${TEMP_DIR}"

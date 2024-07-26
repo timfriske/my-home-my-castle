@@ -14,7 +14,6 @@
 shopt -os nounset pipefail errexit errtrace
 
 # Input parameters and validation:
-cluster="${1:-"${cluster:?required}"}"
-args=("${@:2}") # optional
+AWS_EKS_CLUSTER="${1:-${AWS_EKS_CLUSTER:?required}}"
 
-aws-ec2-lifecycle --filters "Name=tag:aws:eks:cluster-name,Values=${cluster}" "${args[@]}"
+aws-ec2-lifecycle --filters "Name=tag:aws:eks:cluster-name,Values=${AWS_EKS_CLUSTER}" "${@:2}"

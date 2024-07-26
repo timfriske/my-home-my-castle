@@ -13,9 +13,9 @@
 shopt -os nounset pipefail errexit errtrace
 
 # Input parameters and validation:
-kubernetes_version="${1:-"${kubernetes_version:?required}"}"
+K8S_VERSION="${1:-${K8S_VERSION:?required}}"
 
 aws ssm get-parameter \
-  --name "/aws/service/eks/optimized-ami/${kubernetes_version}/amazon-linux-2/recommended/image_id" \
+  --name "/aws/service/eks/optimized-ami/${K8S_VERSION}/amazon-linux-2/recommended/image_id" \
   --query Parameter.Value \
   --output text

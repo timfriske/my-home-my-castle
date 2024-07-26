@@ -23,20 +23,20 @@
 shopt -os nounset errexit errtrace pipefail
 
 # Input parameters and validation:
-: "${aws_region:="${AWS_REGION:-}"}"
-: "${aws_region:="${AWS_DEFAULT_REGION:-}"}"
-: "${aws_region:="$(aws configure get region)"}"
-: "${aws_region:?AWS region required}"
+: "${AWS_REGION:=${AWS_REGION:-}}"
+: "${AWS_REGION:=${AWS_DEFAULT_REGION:-}}"
+: "${AWS_REGION:=$(aws configure get region)}"
+: "${AWS_REGION:?AWS region required}"
 : "${@:?AWS EC2 instance types required}"
 
-aws_ec2_instance_types=()
-for aws_ec2_it in "${@}"; do
-  IFS=, read -r -a aws_ec2_its <<< "${aws_ec2_it}"
-  aws_ec2_instance_types+=("${aws_ec2_its[@]}")
+AWS_EC2_INSTANCE_TYPES=()
+for AWS_EC2_IT in "${@}"; do
+  IFS=, read -r -a AWS_EC2_ITS <<< "${AWS_EC2_IT}"
+  AWS_EC2_INSTANCE_TYPES+=("${AWS_EC2_ITS[@]}")
 done
 
 # Read multi-line jq script into variable for legibility.
-read -d '' -r jq_stats_query <<'JQ_STATS_QUERY' || true
+read -d '' -r AWS_EC2_SPOT_PRICE_STATS_QUERY <<'AWS_EC2_SPOT_PRICE_STATS_QUERY' || true
   def avg:add/length;
   def mdn:sort|[.[length/2|ceil|-.,.-1]/2?]|add;
   def rnd($dp):.*pow(10;$dp)|round/pow(10;$dp);
@@ -56,11 +56,11 @@ read -d '' -r jq_stats_query <<'JQ_STATS_QUERY' || true
     min:min,max:max,avg:avg|rnd(4),mdn:mdn|rnd(4),cnt:length}))
   | map_values({per:.,all:to_entries|[.[].value]|stat})
   | {per:.,all:to_entries|[.[].value.all]|stat}
-JQ_STATS_QUERY
+AWS_EC2_SPOT_PRICE_STATS_QUERY
 
 aws ec2 describe-spot-price-history \
-  --region "${aws_region}" \
+  --region "${AWS_REGION}" \
   --product-descriptions Linux/UNIX \
-  --instance-types "${aws_ec2_instance_types[@]}" \
-  | jq "${jq_stats_query}" \
+  --instance-types "${AWS_EC2_INSTANCE_TYPES[@]}" \
+  | jq "${AWS_EC2_SPOT_PRICE_STATS_QUERY}" \
   | if [[ -t 1 ]]; then yq --prettyPrint; else jq; fi

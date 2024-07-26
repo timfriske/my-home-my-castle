@@ -15,20 +15,20 @@
 shopt -os nounset pipefail errexit errtrace
 
 # Input parameters and validation:
-cluster="${1:-"${cluster:?required}"}"
+K8S_CLUSTER="${1:-${K8S_CLUSTER:?required}}"
 
 # Lists AZs and their ASGs sorted by AZ and ASG as tabulator-separated values.
 function list_az_asg {
-  local cluster="${1:?cluster}"
-  local jq_query=(
+  local k8s_cluster="${1:?k8s_cluster}"
+  local az_asg_query=(
     '.AutoScalingGroups'
     '|map(select(.AvailabilityZones|length==1)'
     '|{az:.AvailabilityZones[0],asg:.AutoScalingGroupName})'
     '|group_by(.az)|map(sort_by(.asg)|map([.az,.asg]))|add[]|@tsv'
   )
   aws autoscaling describe-auto-scaling-groups \
-    --filters "Name=tag-key,Values=k8s.io/cluster-autoscaler/${cluster}" \
-  | jq --raw-output "$(IFS=;printf '%s' "${jq_query[*]}")"
+    --filters "Name=tag-key,Values=k8s.io/cluster-autoscaler/${k8s_cluster}" \
+  | jq --raw-output "$(IFS=;printf '%s' "${az_asg_query[*]}")"
 }
 
 function tag_asg_with_az {
@@ -44,5 +44,5 @@ function tag_asg_with_az {
   aws autoscaling create-or-update-tags --tags "$(IFS=,; printf '%s' "${asg_tags[*]}")"
 }; export -f tag_asg_with_az
 
-list_az_asg "${cluster}" \
-  | parallel --no-run-if-empty --keep-order --colsep '\s+' -- tag_asg_with_az '{2}' '{1}'
+list_az_asg "${K8S_CLUSTER}" \
+| parallel --no-run-if-empty --keep-order --colsep '\s+' -- tag_asg_with_az '{2}' '{1}'

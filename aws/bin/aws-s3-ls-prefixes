@@ -11,5 +11,7 @@
 # Ensure fail-fast script execution.
 shopt -os nounset pipefail errexit errtrace
 
-aws s3 ls -- "${1:?URI required}" \
-  | sed --regexp-extended --expression='s|^\s+PRE\s||'
+# Input parameters and validation:
+AWS_S3_URI="${1:-${AWS_S3_URI:?required}}"
+
+aws s3 ls -- "${AWS_S3_URI}" | sed --regexp-extended --expression='s:^\s+PRE\s::'

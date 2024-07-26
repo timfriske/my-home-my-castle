@@ -14,10 +14,10 @@
 shopt -os nounset pipefail errexit errtrace
 
 # Input parameters and validation:
-stack_name="${1:-"${stack_name:?required}"}"
+STACK_NAME="${1:-${STACK_NAME:?required}}"
 
 # Read multi-line jq script into variable for legibility.
-read -d '' -r jq_stack_query <<'JQ_STACK_QUERY' || true
+read -d '' -r JQ_STACK_QUERY <<'JQ_STACK_QUERY' || true
   .Stacks[0]
   | del(
     .StackId,
@@ -31,4 +31,5 @@ read -d '' -r jq_stack_query <<'JQ_STACK_QUERY' || true
   )
 JQ_STACK_QUERY
 
-aws cloudformation describe-stacks --stack-name "${stack_name}" | jq "${jq_stack_query}"
+aws cloudformation describe-stacks --stack-name "${STACK_NAME}" \
+| jq "${JQ_STACK_QUERY}"

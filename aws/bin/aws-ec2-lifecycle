@@ -20,8 +20,12 @@
 # Ensure fail-fast script execution.
 shopt -os nounset pipefail errexit errtrace
 
-#shellcheck disable=SC2016
-aws ec2 describe-instances "${@}" \
-  --query 'Reservations[*].Instances[?State.Name==`running`].[InstanceType,InstanceLifecycle]' \
-  --output=text \
-  | rank | sed --expression='s/None$/norm/'
+# Read multi-line JMESPath script into variable for legibility.
+read -d '' -r AWS_EC2_LIFECYCLE_QUERY <<'AWS_EC2_LIFECYCLE_QUERY' || true
+  Reservations[*]
+  .Instances[?State.Name==`running`]
+  .[InstanceType,InstanceLifecycle]
+AWS_EC2_LIFECYCLE_QUERY
+
+aws ec2 describe-instances "${@}" --query "${AWS_EC2_LIFECYCLE_QUERY}" --output=text \
+| rank | sed --expression='s/None$/norm/'

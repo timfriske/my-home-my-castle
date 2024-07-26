@@ -14,26 +14,26 @@
 shopt -os nounset pipefail errexit errtrace
 
 # Input parameters and validation:
-template_file="${1:-"${template_file:?required}"}"
-config_file="${2:-"${config_file:?required}"}"
-stack_name="${3:-"${stack_name:-}"}" # optional override
+TEMPLATE_FILE="${1:-${TEMPLATE_FILE:?required}}"
+CONFIG_FILE="${2:-${CONFIG_FILE:?required}}"
+STACK_NAME="${3:-${STACK_NAME:-}}" # optional override
 
 # Derived parameters:
-template_file="${template_file/#/file://}" # Prepend 'file://'
-stack_name="${stack_name:-"$(jq --raw-output '.StackName' -- "${config_file}")"}"
-parameters="$(jq --compact-output '.Parameters' -- "${config_file}")"
-no_rollback="$(jq --raw-output 'select(.DisableRollback|not)|"no-"' -- "${config_file}")"
-tags="$(jq --compact-output '.Tags' -- "${config_file}")"
-no_term_prot="$(jq --raw-output 'select(.EnableTerminationProtection|not)|"no-"' -- "${config_file}")"
+TEMPLATE_FILE="${TEMPLATE_FILE/#/file://}" # Prepend 'file://'
+STACK_NAME="${STACK_NAME:-$(jq --raw-output '.StackName' -- "${CONFIG_FILE}")}"
+PARAMETERS="$(jq --compact-output '.Parameters' -- "${CONFIG_FILE}")"
+NO_ROLLBACK="$(jq --raw-output 'select(.DisableRollback|not)|"no-"' -- "${CONFIG_FILE}")"
+TAGS="$(jq --compact-output '.Tags' -- "${CONFIG_FILE}")"
+NO_TERM_PROT="$(jq --raw-output 'select(.EnableTerminationProtection|not)|"no-"' -- "${CONFIG_FILE}")"
 
 # Create stack and wait until it is completely created:
 aws cloudformation create-stack \
-  --stack-name "${stack_name}" \
-  --template-body "${template_file}" \
-  --parameters "${parameters}" \
-  --"${no_rollback}disable-rollback" \
+  --stack-name "${STACK_NAME}" \
+  --template-body "${TEMPLATE_FILE}" \
+  --parameters "${PARAMETERS}" \
+  --"${NO_ROLLBACK}disable-rollback" \
   --capabilities CAPABILITY_IAM \
-  --tags "${tags}" \
-  --"${no_term_prot}enable-termination-protection" \
+  --tags "${TAGS}" \
+  --"${NO_TERM_PROT}enable-termination-protection" \
   | jq --raw-output '.StackId'
-aws cloudformation wait stack-create-complete --stack-name "${stack_name}"
+aws cloudformation wait stack-create-complete --stack-name "${STACK_NAME}"

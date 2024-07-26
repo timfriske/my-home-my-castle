@@ -11,10 +11,15 @@
 # Ensure fail-fast script execution.
 shopt -os nounset pipefail errexit errtrace
 
-function create_emtpy_object {
-  local object_uri="${1:?AWS S3 object URI required}"
-  printf 'Creating empty AWS S3 object "%s"...\n' "${object_uri}"
-  : | aws s3 cp - "${object_uri}"
+# Input parameters and validation:
+AWS_S3_OBJECT_URI="${1:-${AWS_S3_OBJECT_URI:?required}}"
+
+function create_empty_aws_s3_object {
+  local aws_s3_object_uri="${1:?aws_s3_object_uri}"
+  printf 'Creating empty AWS S3 object "%s"...\n' "${aws_s3_object_uri}"
+  # Pipe empty output of no-op command `:` as standard input to `aws s3 cp`.
+  # Command `aws s3 cp` refuses to read from special files like `/dev/null`.
+  : | aws s3 cp - "${aws_s3_object_uri}"
 }
 
-create_emtpy_object "${@}"
+create_empty_aws_s3_object "${AWS_S3_OBJECT_URI}"

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# AWS Profiles command
-# ====================
+# AWS Profiles Exported command
+# =============================
 # Tim Friske <me@tifr.de>
 #
 # Lists potential environment variable declarations of the configured AWS
@@ -11,7 +11,7 @@
 # effect for the current and child processes it must be actually executed by a
 # shell.
 #
-# Deps:: aws, bash, env, grep, sort
+# Deps:: aws-profiles, bash, env, grep, sort
 
 # Ensure fail-fast script execution.
 shopt -os nounset pipefail errexit errtrace

@@ -15,7 +15,7 @@
 shopt -os nounset pipefail errexit errtrace
 
 # Input parameters and validation:
-names=("${@}") # optional
+NAMES=("${@}") # optional
 
 function repos {
   aws ecr describe-repositories --output json | jq '.repositories'
@@ -35,7 +35,8 @@ function tsv_by_name_arn {
 }
 
 function resource_tags_by_name_arn {
-  local name="${1:?name}" arn="${2:?arn}"
+  local name="${1:?name}"
+  local arn="${2:?arn}"
   aws ecr list-tags-for-resource --output json --resource-arn "${arn}" | jq --arg rn "${name}" '{repo:$rn,tags}'
 }; export -f resource_tags_by_name_arn
 
@@ -43,5 +44,5 @@ function sort_by_repo {
   jq --slurp 'sort_by(.repo)'
 }
 
-repos | select_by_name "${names[@]}" | tsv_by_name_arn \
+repos | select_by_name "${NAMES[@]}" | tsv_by_name_arn \
   | parallel --no-run-if-empty --colsep '\t' -- resource_tags_by_name_arn '{1}' '{2}' | sort_by_repo
