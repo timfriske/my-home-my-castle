@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Matches command
+# ===============
+# Tim Friske <me@tifr.de>
+#
+# Search for matching strings, rank, i.e. sort them according to their number of
+# occurrences in descending order, and print them.
+#
+# Deps:: bash, env, rank, rg
+
+# Ensure fail-fast script execution.
+shopt -os nounset noclobber pipefail errexit errtrace
+
+rg --only-matching --smart-case "${@}" | rank
